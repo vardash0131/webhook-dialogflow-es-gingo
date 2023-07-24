@@ -3,7 +3,6 @@ package main
 import (
 	"dialogflow-webhook/structs"
 	"dialogflow-webhook/structs/agent"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -24,7 +23,8 @@ func detectIntent(c *gin.Context) {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
-	fmt.Println(body.GetIntentName())
-	c.JSON(http.StatusOK, agent.CreateResponse(&body))
+	response := agent.CreateResponse(&body)
+
+	c.SecureJSON(http.StatusOK, response)
 
 }
